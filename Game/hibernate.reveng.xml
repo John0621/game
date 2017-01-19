@@ -4,6 +4,11 @@
 <hibernate-reverse-engineering>
 
 	<table name="userinfo" catalog="game">
+		<column name="id"></column>
 		<column name="username"></column>
+		<column name="userpassword"></column>
+		<column name="truename"></column>
+		<column name="note"></column>
+		<column name="score"></column>
 	</table>
 </hibernate-reverse-engineering>

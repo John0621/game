@@ -11,13 +11,12 @@ public class LoginDAOImpl extends HibernateDaoSupport implements LoginDAO {
 	@Override
 	public boolean login(String username, String password) {
 		List<Userinfo> u = this.getHibernateTemplate().find(
-				//问题
-				"from userinfo where username = ? and userpassword = ?" ,username, password);
+				"from Userinfo where username = ? and userpassword = ?",
+				username, password);
 		boolean flag = false;
-		if(u.size()>0){
+		if (u.size() > 0) {
 			flag = true;
 		}
 		return flag;
 	}
-
 }
