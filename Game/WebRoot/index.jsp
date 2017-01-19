@@ -27,7 +27,7 @@
 	<br>
 	<form method="post" action="Login">
 		用户名：<input name="username" type="text" />                         密码：<input
-			name="password" type="password" /> <input name="Submits"
+			name="userpassword" type="password" /> <input name="Submits"
 			type="submit" value="登录" /> <input name="ReSet" type="reset"
 			value="重置" /> 
 	</form>
