@@ -18,7 +18,7 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/main.css">
-<script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery-1.8.3.min.js"></script>
 
 <script>
 	$(document).ready(function() {
@@ -46,12 +46,50 @@
 	function random(min, max) {
 		return Math.floor(min + Math.random() * (max - min));
 	}
+
+	//websocket
+	var webSocket = new WebSocket('ws://192.168.8.101:8080/Game/websocket');
+
+	webSocket.onerror = function(event) {
+		onError(event);
+	};
+
+	webSocket.onopen = function(event) {
+		onOpen(event);
+	};
+
+	webSocket.onmessage = function(event) {
+		onMessage(event);
+	};
+
+	function onMessage(event) {
+		document.getElementById('messages').innerHTML += '<br />' + event.data;
+	}
+
+	function onOpen(event) {
+		document.getElementById('messages').innerHTML = 'Connection established';
+	}
+
+	function onError(event) {
+		alert(event.data);
+	}
+	function start() {
+		var result1 = $("#inmsg").val();
+		webSocket.send(result1);
+		return false;
+	}
 </script>
 </head>
 
 <body>
 	<div id="readytable">
-		<div class="roletable"></div>
+		<div class="roletable">
+			<div>
+				<input type="text" id="inmsg"> <input type="submit"
+					value="Start" onclick="start()" />
+			</div>
+			<div id="messages"></div>
+		</div>
 		<div class="roletable"></div>
 		<div class="roletable"></div>
 	</div>
