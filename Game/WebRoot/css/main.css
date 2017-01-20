@@ -1,0 +1,25 @@
+#talk {
+	float: right;
+	width: 10%;
+	height: 100%;
+	overflow: auto;
+	overflow-x: hidden;
+	border: 2px solid #000;
+}
+
+#readytable {
+	float: left;
+	width: 89%;
+	height: 100%;
+	border: 2px solid #000;
+}
+
+.roletable {
+	float: left;
+	width: 32%;
+	height: 99%;
+	overflow: auto;
+	overflow-x: hidden;
+	border: 2px solid #000;
+	margin: 1px;
+}
