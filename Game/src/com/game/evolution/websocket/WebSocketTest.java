@@ -4,22 +4,29 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/websocket")
+import com.game.evolution.domain.Userinfo;
+
+@ServerEndpoint(value = "/websocket", configurator = GetHttpSessionConfigurator.class)
 public class WebSocketTest {
 	/**
 	 * 连接对象集合
 	 */
 	private static final Set<WebSocketTest> connections = new CopyOnWriteArraySet<WebSocketTest>();
-
-	private String nickName;
+	// 角色名称
+	private String roleName;
+	// 所属桌号
+	private String tableNum;
+	// 用户操作
+	private String operation;
 
 	/**
 	 * WebSocket Session
@@ -33,18 +40,19 @@ public class WebSocketTest {
 	 * 打开连接
 	 * 
 	 * @param session
-	 * @param nickName
+	 * @param roleName
 	 */
 	@OnOpen
-	public void onOpen(Session session,
-			@PathParam(value = "nickName") String nickName) {
-
+	public void onOpen(Session session, EndpointConfig config) {
+		HttpSession httpSession = (HttpSession) config.getUserProperties().get(
+				HttpSession.class.getName());
+		Userinfo userinfo = (Userinfo) httpSession.getAttribute("userinfo");
+		System.out.println(userinfo.getTruename());
 		this.session = session;
-		this.nickName = nickName;
+		this.roleName = userinfo.getTruename();
 
 		connections.add(this);
-		String message = String.format("System> %s %s", this.nickName,
-				" has joined.");
+		String message = String.format("System> %s %s", this.roleName, " 上线了.");
 		WebSocketTest.broadCast(message);
 	}
 
@@ -54,8 +62,8 @@ public class WebSocketTest {
 	@OnClose
 	public void onClose() {
 		connections.remove(this);
-		String message = String.format("System> %s, %s", this.nickName,
-				" has disconnection.");
+		String message = String
+				.format("System> %s, %s", this.roleName, " 下线了.");
 		WebSocketTest.broadCast(message);
 	}
 
@@ -63,12 +71,11 @@ public class WebSocketTest {
 	 * 接收信息
 	 * 
 	 * @param message
-	 * @param nickName
+	 * @param roleName
 	 */
 	@OnMessage
-	public void onMessage(String message,
-			@PathParam(value = "nickName") String nickName) {
-		WebSocketTest.broadCast(nickName + ">" + message);
+	public void onMessage(String message) {
+		WebSocketTest.broadCast(this.roleName + ">" + message);
 	}
 
 	/**
@@ -99,7 +106,7 @@ public class WebSocketTest {
 				} catch (IOException e1) {
 				}
 				WebSocketTest.broadCast(String.format("System> %s %s",
-						websocketTest.nickName, " has bean disconnection."));
+						websocketTest.roleName, " has bean disconnection."));
 			}
 		}
 	}

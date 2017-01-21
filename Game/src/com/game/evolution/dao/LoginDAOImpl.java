@@ -2,9 +2,12 @@ package com.game.evolution.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.game.evolution.domain.Userinfo;
+import com.opensymphony.xwork2.ActionContext;
 
 public class LoginDAOImpl extends HibernateDaoSupport implements LoginDAO {
 
@@ -13,8 +16,12 @@ public class LoginDAOImpl extends HibernateDaoSupport implements LoginDAO {
 		List<Userinfo> u = this.getHibernateTemplate().find(
 				"from Userinfo where username = ? and userpassword = ?",
 				username, password);
+
 		boolean flag = false;
 		if (u.size() > 0) {
+			Userinfo userinfo = new Userinfo();
+			userinfo = u.get(0);
+			ActionContext.getContext().getSession().put("userinfo", userinfo);
 			flag = true;
 		}
 		return flag;

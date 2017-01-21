@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<constant name="struts.action.excludePattern" value="/websocket*,^ws://.$"/>
+	<constant name="struts.action.excludePattern" value="/websocket*,^ws://.$" />
 	<package name="default" extends="struts-default" namespace="/">
 		<action name="Login" class="loginAction" method="login">
 			<result name="input">/index.jsp</result>
 			<result name="Success">/main.jsp</result>
 		</action>
+		<action name="setin" class="tableAction" method="setin" />
 	</package>
+	<package name="person" extends="json-default">
+		<action name="setin" class="tableAction">
+			<result type="json" />
+		</action>
+	</package>
+	<constant name="struts.objectFactory" value="spring"></constant>
 </struts>    

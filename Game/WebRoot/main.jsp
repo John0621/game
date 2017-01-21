@@ -18,37 +18,57 @@
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" type="text/css" href="css/main.css">
-<script type="text/javascript" src="js/jquery/jquery-1.8.3.min.js"></script>
-
+<script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
 <script>
 	$(document).ready(function() {
-		setTimout(test(), 200);
-		$("#btn1").click(function() {
-			$("#test1").text("Hello world!");
-		});
-		$("#btn2").click(function() {
-			$("#test2").html("<b>Hello world!</b>");
-		});
-		$("#btn3").click(function() {
-			$("#test3").val("Dolly Duck");
-		});
+		trace(300);
 	});
-	var int = self.setInterval(function() {
-		changetest1();
-	}, 1000);
-	function changetest1() {
-		var a = random(100, 500);
-		var insertHtml = "<p>" + a + "</p>";
-		$("#talk > p:last-child").after(insertHtml);
-		$("#talk").scrollTop($("#talk")[0].scrollHeight);
+	function trace(obj) {
+		for ( var i = 0; i < obj; i++) {
+			var num = i + 1;
+			var tableid = "table" + num;
+			var buttonid = "button" + num;
+			var pid = "p" + num;
+			var insertHtml = "<div class='table' id='"+tableid+"'><p>0/3</p><input type='submit' value='坐下' onclick='setin()'"
+					+ num + "</div>";
+			$("#readytable > div:last-child").after(insertHtml);
+		}
+	};
+
+	function setin() {
+		alert(11111);
+		$.ajax({
+			//这里的需要Struts.xml的<action/>的name属性一致。
+			url : "setin",
+			//提交类型
+			type : "POST",
+			//提交数据给Action传入数据 
+			data : {},
+			//返回的数据类型
+			dataType : "json",
+			//成功是调用的方法
+			success : callback
+		});
+		function callback(data) {
+			alert(data);
+		}
 	}
-	//获取范围内的随机数  
-	function random(min, max) {
-		return Math.floor(min + Math.random() * (max - min));
-	}
+	/* 	var int = self.setInterval(function() {
+	 changetest1();
+	 }, 1000);
+	 function changetest1() {
+	 var a = random(100, 500);
+	 var insertHtml = "<p>" + a + "</p>";
+	 $("#talk > p:last-child").after(insertHtml);
+	 $("#talk").scrollTop($("#talk")[0].scrollHeight);
+	 }
+	 //获取范围内的随机数  
+	 function random(min, max) {
+	 return Math.floor(min + Math.random() * (max - min));
+	 } */
 
 	//websocket
-	var webSocket = new WebSocket('ws://192.168.8.101:8080/Game/websocket');
+	var webSocket = new WebSocket('ws://127.0.0.1:8080/Game/websocket');
 
 	webSocket.onerror = function(event) {
 		onError(event);
@@ -63,13 +83,18 @@
 	};
 
 	function onMessage(event) {
-		document.getElementById('messages').innerHTML += '<br />' + event.data;
+		addmsg(event.data);
 	}
 
 	function onOpen(event) {
-		document.getElementById('messages').innerHTML = 'Connection established';
+		//document.getElementById('messages').innerHTML = '连接建立中。。。。。。';
+		addmsg("连接建立中。。。。。。");
 	}
-
+	function addmsg(message) {
+		var insertHtml = "<p class='message'>" + message + "</p>";
+		$("#messages > p:last-child").after(insertHtml);
+		$("#messages").scrollTop($("#talk")[0].scrollHeight);
+	}
 	function onError(event) {
 		alert(event.data);
 	}
@@ -79,23 +104,23 @@
 		return false;
 	}
 </script>
+
 </head>
 
 <body>
 	<div id="readytable">
-		<div class="roletable">
-			<div>
-				<input type="text" id="inmsg"> <input type="submit"
-					value="Start" onclick="start()" />
-			</div>
-			<div id="messages"></div>
-		</div>
-		<div class="roletable"></div>
-		<div class="roletable"></div>
+		<div></div>
 	</div>
 	<div id="talk">
-		<p>聊天内容：</p>
-		<p></p>
+		<p class="message">聊天内容：</p>
+		<div id="messages" class="messages" style="bottom: 40px;">
+			<p></p>
+		</div>
+		<div style="bottom: 5px;left: 5px;">
+			<input type="text" id="inmsg" style="width: 120px;"> <input
+				type="submit" value="发送" onclick="start()" />
+		</div>
 	</div>
 </body>
+
 </html>

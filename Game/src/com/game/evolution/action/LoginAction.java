@@ -4,17 +4,20 @@ import com.game.evolution.service.LoginService;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport {
+	private static final long serialVersionUID = 1L;
 	private LoginService loginservice;
 	private String username;
 	private String userpassword;
-	public String login(){
+
+	public String login() {
 		boolean flag = loginservice.login(username, userpassword);
-		if(flag){
+		if (flag) {
 			return "Success";
-		}else{
+		} else {
 			return "input";
 		}
 	}
+
 	public LoginService getLoginservice() {
 		return loginservice;
 	}

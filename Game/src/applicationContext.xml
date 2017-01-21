@@ -40,4 +40,6 @@
 	<bean id="loginAction" class="com.game.evolution.action.LoginAction">
 		<property name="loginservice" ref="logins" />
 	</bean>
+	<bean id="tableAction" class="com.game.evolution.action.TableAction">
+	</bean>
 </beans>
