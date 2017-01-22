@@ -48,7 +48,8 @@
 			dataType : "json",
 			//成功是调用的方法
 			success : function(json) {
-				alert(json);
+				var returnsssmsg = json.result;
+				alert(returnsssmsg);
 			}
 		});
 	}
