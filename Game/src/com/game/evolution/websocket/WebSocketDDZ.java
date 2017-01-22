@@ -54,7 +54,7 @@ public class WebSocketDDZ {
 
 		connections.add(this);
 		String message = String.format("System> %s %s", this.roleName, " 上线了.");
-		WebSocketDDZ.broadCast(message);
+		WebSocketDDZ.broadCast(message, this.location);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class WebSocketDDZ {
 		connections.remove(this);
 		String message = String
 				.format("System> %s, %s", this.roleName, " 下线了.");
-		WebSocketDDZ.broadCast(message);
+		WebSocketDDZ.broadCast(message, this.location);
 	}
 
 	/**
@@ -76,7 +76,8 @@ public class WebSocketDDZ {
 	 */
 	@OnMessage
 	public void onMessage(String message) {
-		WebSocketDDZ.broadCast("" + this.roleName + ">" + message);
+		WebSocketDDZ.broadCast("" + this.roleName + ">" + message,
+				this.location);
 	}
 
 	/**
@@ -94,11 +95,11 @@ public class WebSocketDDZ {
 	 * 
 	 * @param message
 	 */
-	private static void broadCast(String message) {
+	private static void broadCast(String message, String location) {
 		for (WebSocketDDZ websocketddz : connections) {
 			try {
 				synchronized (websocketddz) {
-					if (websocketddz.location.equals("ddz")) {
+					if (websocketddz.location.equals(location)) {
 						websocketddz.session.getBasicRemote().sendText(message);
 					}
 
@@ -109,9 +110,10 @@ public class WebSocketDDZ {
 					websocketddz.session.close();
 				} catch (IOException e1) {
 				}
-				if (websocketddz.location.equals("ddz")) {
+				if (websocketddz.location.equals(location)) {
 					WebSocketDDZ.broadCast(String.format("System> %s %s",
-							websocketddz.roleName, " has bean disconnection."));
+							websocketddz.roleName, " has bean disconnection."),
+							location);// 问题点
 				}
 			}
 		}
