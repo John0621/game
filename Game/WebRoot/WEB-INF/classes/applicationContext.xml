@@ -43,4 +43,7 @@
 	<!-- tableAction注入 -->
 	<bean id="tableAction" class="com.game.evolution.action.TableAction">
 	</bean>
+	<!-- palyAction注入 -->
+	<bean id="palyAction" class="com.game.evolution.action.PlayAction">
+	</bean>
 </beans>

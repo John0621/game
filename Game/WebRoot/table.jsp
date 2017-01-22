@@ -11,66 +11,16 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'index.jsp' starting page</title>
+<title>My JSP 'table.jsp' starting page</title>
+
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/table.css">
 <script type="text/javascript" src="js/jquery/jquery-3.1.1.min.js"></script>
 <script>
-	$(document).ready(function() {
-		trace(100);
-	});
-	function trace(obj) {
-		for ( var i = 0; i < obj; i++) {
-			var num = i + 1;
-			var tableid = "table" + num;
-			var buttonid = "button" + num;
-			var pid = "p" + num;
-			var insertHtml = "<div class='table' id='"+tableid+"'><p>第"
-					+ num
-					+ "桌</p><p id='"+pid+"'>0/3</p><button onclick='setin(id)' id='"
-					+ buttonid + "'>加入</button></div>";
-			$("#readytable > div:last-child").after(insertHtml);
-		}
-	};
-	/* 用户点击坐下按钮 */
-	function setin(obj) {
-
-		$.ajax({
-			//这里的需要Struts.xml的<action/>的name属性一致。
-			url : "Setin",
-			//提交类型
-			type : "POST",
-			//提交数据给Action传入数据 
-			data : {},
-			//返回的数据类型
-			dataType : "json",
-			//成功是调用的方法
-			success : function(data) {
-				var returnaaa = data.aaa;
-				alert(returnaaa);
-				window.location.href = "table.jsp";
-			}
-		});
-
-	}
-	/* 	var int = self.setInterval(function() {
-	 changetest1();
-	 }, 1000);
-	 function changetest1() {
-	 var a = random(100, 500);
-	 var insertHtml = "<p>" + a + "</p>";
-	 $("#talk > p:last-child").after(insertHtml);
-	 $("#talk").scrollTop($("#talk")[0].scrollHeight);
-	 }
-	 //获取范围内的随机数  
-	 function random(min, max) {
-	 return Math.floor(min + Math.random() * (max - min));
-	 } */
-
 	//websocket
 	var webSocket = new WebSocket('ws://127.0.0.1:8080/Game/websocketddz');
 
@@ -107,15 +57,36 @@
 		webSocket.send(result1);
 		return false;
 	}
+	/* 用户点击坐下按钮 */
+	function sendCards() {
+		$.ajax({
+			//这里的需要Struts.xml的<action/>的name属性一致。
+			url : "SendCards",
+			//提交类型
+			type : "POST",
+			//提交数据给Action传入数据 
+			data : {},
+			//返回的数据类型
+			dataType : "json",
+			//成功是调用的方法
+			success : function(data) {
+				var returnaaa = data.aaa;
+				alert(returnaaa);
+			}
+		});
+	}
 </script>
-
 </head>
 
 <body>
-	<div id="readytable">
-		<div></div>
+	<div id="readytable" class="table">
+		<div class="roleleft"></div>
+		<div class="roleright"></div>
+		<div class="roleself">
+			<button onclick="sendCards()">开始游戏</button>
+		</div>
 	</div>
-	<div id="talk">
+	<div id="talk" class="talk">
 		<p class="message">聊天内容：</p>
 		<div id="messages" class="messages" style="bottom: 40px;">
 			<p></p>
@@ -126,5 +97,4 @@
 		</div>
 	</div>
 </body>
-
 </html>

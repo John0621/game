@@ -15,16 +15,16 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.game.evolution.domain.Userinfo;
 
-@ServerEndpoint(value = "/websocket", configurator = GetHttpSessionConfigurator.class)
-public class WebSocketTest {
+@ServerEndpoint(value = "/websocketddz", configurator = GetHttpSessionConfigurator.class)
+public class WebSocketDDZ {
 	/**
 	 * 连接对象集合
 	 */
-	private static final Set<WebSocketTest> connections = new CopyOnWriteArraySet<WebSocketTest>();
+	private static final Set<WebSocketDDZ> connections = new CopyOnWriteArraySet<WebSocketDDZ>();
 	// 角色名称
 	private String roleName;
-	// 所属桌号
-	private String tableNum;
+	// 用户未知
+	private String location;
 	// 用户操作
 	private String operation;
 
@@ -33,7 +33,7 @@ public class WebSocketTest {
 	 */
 	private Session session;
 
-	public WebSocketTest() {
+	public WebSocketDDZ() {
 	}
 
 	/**
@@ -49,12 +49,12 @@ public class WebSocketTest {
 		Userinfo userinfo = (Userinfo) httpSession.getAttribute("userinfo");
 		System.out.println(userinfo.getTruename());
 		this.session = session;
+		this.location = "ddz";
 		this.roleName = userinfo.getTruename();
 
 		connections.add(this);
-		String message = String.format("System> %s %s", this.roleName,
-				" 上线了.");
-		WebSocketTest.broadCast(message);
+		String message = String.format("System> %s %s", this.roleName, " 上线了.");
+		WebSocketDDZ.broadCast(message);
 	}
 
 	/**
@@ -63,9 +63,9 @@ public class WebSocketTest {
 	@OnClose
 	public void onClose() {
 		connections.remove(this);
-		String message = String.format("System> %s, %s", this.roleName,
-				" 下线了.");
-		WebSocketTest.broadCast(message);
+		String message = String
+				.format("System> %s, %s", this.roleName, " 下线了.");
+		WebSocketDDZ.broadCast(message);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class WebSocketTest {
 	 */
 	@OnMessage
 	public void onMessage(String message) {
-		WebSocketTest.broadCast("" + this.roleName + ">" + message);
+		WebSocketDDZ.broadCast("" + this.roleName + ">" + message);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class WebSocketTest {
 	 */
 	@OnError
 	public void onError(Throwable throwable) {
-		System.out.println(throwable.getMessage());    
+		System.out.println(throwable.getMessage());
 	}
 
 	/**
@@ -95,21 +95,62 @@ public class WebSocketTest {
 	 * @param message
 	 */
 	private static void broadCast(String message) {
-		for (WebSocketTest websocketTest : connections) {  
+		for (WebSocketDDZ websocketddz : connections) {
 			try {
-				synchronized (websocketTest) {
-					websocketTest.session.getBasicRemote().sendText(message);
+				synchronized (websocketddz) {
+					if (websocketddz.location.equals("ddz")) {
+						websocketddz.session.getBasicRemote().sendText(message);
+					}
+
 				}
 			} catch (IOException e) {
-				connections.remove(websocketTest);
+				connections.remove(websocketddz);
 				try {
-					websocketTest.session.close();
+					websocketddz.session.close();
 				} catch (IOException e1) {
 				}
-				WebSocketTest.broadCast(String.format("System> %s %s",
-						websocketTest.roleName, " has bean disconnection."));
+				if (websocketddz.location.equals("ddz")) {
+					WebSocketDDZ.broadCast(String.format("System> %s %s",
+							websocketddz.roleName, " has bean disconnection."));
+				}
 			}
 		}
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getOperation() {
+		return operation;
+	}
+
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+	public static Set<WebSocketDDZ> getConnections() {
+		return connections;
 	}
 
 }

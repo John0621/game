@@ -14,6 +14,9 @@ public class Userinfo implements java.io.Serializable {
 	private String truename;
 	private String note;
 	private Integer score;
+	
+	//ddzFields
+	private Integer location;
 
 	// Constructors
 
@@ -79,6 +82,14 @@ public class Userinfo implements java.io.Serializable {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public Integer getLocation() {
+		return location;
+	}
+
+	public void setLocation(Integer location) {
+		this.location = location;
 	}
 
 }

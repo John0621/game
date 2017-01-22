@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<constant name="struts.action.excludePattern" value="/websocket*,^ws://.$" />
+	<constant name="struts.action.excludePattern" value="/websocketddz*,^ws://.$" />
 	<package name="default" extends="struts-default" namespace="/">
 		<action name="Login" class="loginAction" method="login">
 			<result name="input">/index.jsp</result>
@@ -10,6 +10,9 @@
 	</package>
 	<package name="ajax" extends="json-default" namespace="/">
 		<action name="Setin" class="tableAction" method="setin">
+			<result name="success" type="json" />
+		</action>
+		<action name="SendCards" class="palyAction" method="sendCards">
 			<result name="success" type="json" />
 		</action>
 	</package>
