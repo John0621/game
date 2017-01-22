@@ -86,7 +86,7 @@ public class WebSocketTest {
 	 */
 	@OnError
 	public void onError(Throwable throwable) {
-		System.out.println(throwable.getMessage());
+		System.out.println(throwable.getMessage());  
 	}
 
 	/**
