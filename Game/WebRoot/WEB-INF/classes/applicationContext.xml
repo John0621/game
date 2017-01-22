@@ -36,10 +36,11 @@
 	<bean id="logins" class="com.game.evolution.service.LoginServiceImpl">
 		<property name="logindao" ref="logind" />
 	</bean>
-	<!-- Action注入 -->
+	<!-- loginAction注入 -->
 	<bean id="loginAction" class="com.game.evolution.action.LoginAction">
 		<property name="loginservice" ref="logins" />
 	</bean>
+	<!-- tableAction注入 -->
 	<bean id="tableAction" class="com.game.evolution.action.TableAction">
 	</bean>
 </beans>

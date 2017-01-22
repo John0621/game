@@ -39,7 +39,7 @@
 		alert("setin");
 		$.ajax({
 			//这里的需要Struts.xml的<action/>的name属性一致。
-			url : "setin",
+			url : "Setin",
 			//提交类型
 			type : "POST",
 			//提交数据给Action传入数据 
@@ -47,11 +47,10 @@
 			//返回的数据类型
 			dataType : "json",
 			//成功是调用的方法
-			success : callback
+			success : function(json) {
+				alert(json);
+			}
 		});
-		function callback(data) {
-			alert(data);
-		}
 	}
 	/* 	var int = self.setInterval(function() {
 	 changetest1();

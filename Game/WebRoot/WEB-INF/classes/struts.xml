@@ -7,10 +7,9 @@
 			<result name="input">/index.jsp</result>
 			<result name="Success">/main.jsp</result>
 		</action>
-		<action name="setin" class="tableAction" method="setin" />
 	</package>
-	<package name="person" extends="json-default">
-		<action name="tableAction" class="tableAction" method="setin">
+	<package name="ajax" extends="json-default" namespace="/">
+		<action name="Setin" class="tableAction" method="setin">
 			<result type="json" />
 		</action>
 	</package>
