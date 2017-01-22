@@ -117,8 +117,8 @@
 			<p></p>
 		</div>
 		<div style="bottom: 5px;left: 5px;">
-			<input type="text" id="inmsg" style="width: 120px;"> <input
-				type="submit" value="发送" onclick="start()" />
+			<input type="text" id="inmsg" style="width: 120px;">
+			<button onclick="start()">发送</button>
 		</div>
 	</div>
 </body>
