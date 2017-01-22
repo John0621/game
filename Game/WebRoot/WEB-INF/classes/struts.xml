@@ -10,7 +10,7 @@
 	</package>
 	<package name="ajax" extends="json-default" namespace="/">
 		<action name="Setin" class="tableAction" method="setin">
-			<result type="json" />
+			<result name="success" type="json" />
 		</action>
 	</package>
 	<constant name="struts.objectFactory" value="spring"></constant>

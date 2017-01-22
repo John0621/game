@@ -4,13 +4,25 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class TableAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
+	private String aaa;
 
 	public String setin() {
 		boolean flag = false;
 		if (flag) {
-			return "success";
+			this.aaa = "true";
 		} else {
-			return "false";
+			this.aaa = "false";
 		}
+		return "success";
 	}
+
+	public String getAaa() {
+		return aaa;
+	}
+
+	public void setAaa(String aaa) {
+		this.aaa = aaa;
+	}
+
+
 }

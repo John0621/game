@@ -52,7 +52,8 @@ public class WebSocketTest {
 		this.roleName = userinfo.getTruename();
 
 		connections.add(this);
-		String message = String.format("System> %s %s", this.roleName, " 上线了.");
+		String message = String.format("System> %s %s", this.roleName,
+				" 上线了.");
 		WebSocketTest.broadCast(message);
 	}
 
@@ -62,8 +63,8 @@ public class WebSocketTest {
 	@OnClose
 	public void onClose() {
 		connections.remove(this);
-		String message = String
-				.format("System> %s, %s", this.roleName, " 下线了.");
+		String message = String.format("System> %s, %s", this.roleName,
+				" 下线了.");
 		WebSocketTest.broadCast(message);
 	}
 
@@ -75,7 +76,7 @@ public class WebSocketTest {
 	 */
 	@OnMessage
 	public void onMessage(String message) {
-		WebSocketTest.broadCast(this.roleName + ">" + message);
+		WebSocketTest.broadCast("" + this.roleName + ">" + message);
 	}
 
 	/**

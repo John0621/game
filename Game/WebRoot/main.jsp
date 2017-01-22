@@ -29,14 +29,15 @@
 			var tableid = "table" + num;
 			var buttonid = "button" + num;
 			var pid = "p" + num;
-			var insertHtml = "<div class='table' id='"+tableid+"'><p>0/3</p><button onclick='setin()' id='"
+			var insertHtml = "<div class='table' id='"+tableid+"'><p class='message'>第"
+					+ num
+					+ "桌</p><p class='message' id='"+pid+"'>0/3</p><button onclick='setin(id)' id='"
 					+ buttonid + "'>加入</button></div>";
 			$("#readytable > div:last-child").after(insertHtml);
 		}
 	};
-
-	function setin() {
-		alert("setin");
+	/* 用户点击坐下按钮 */
+	function setin(obj) {
 		$.ajax({
 			//这里的需要Struts.xml的<action/>的name属性一致。
 			url : "Setin",
@@ -47,9 +48,9 @@
 			//返回的数据类型
 			dataType : "json",
 			//成功是调用的方法
-			success : function(json) {
-				var returnsssmsg = json.result;
-				alert(returnsssmsg);
+			success : function(data) {
+				var returnaaa = data.aaa;
+				alert(returnaaa);
 			}
 		});
 	}
