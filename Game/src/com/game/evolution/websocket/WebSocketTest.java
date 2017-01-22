@@ -95,7 +95,7 @@ public class WebSocketTest {
 	 * @param message
 	 */
 	private static void broadCast(String message) {
-		for (WebSocketTest websocketTest : connections) {
+		for (WebSocketTest websocketTest : connections) {  
 			try {
 				synchronized (websocketTest) {
 					websocketTest.session.getBasicRemote().sendText(message);
