@@ -29,14 +29,14 @@
 			var tableid = "table" + num;
 			var buttonid = "button" + num;
 			var pid = "p" + num;
-			var insertHtml = "<div class='table' id='"+tableid+"'><p>0/3</p><input type='submit' value='坐下' onclick='setin()'"
-					+ num + "</div>";
+			var insertHtml = "<div class='table' id='"+tableid+"'><p>0/3</p><button onclick='setin()' id='"
+					+ buttonid + "'>加入</button></div>";
 			$("#readytable > div:last-child").after(insertHtml);
 		}
 	};
 
 	function setin() {
-		alert(11111);
+		alert("setin");
 		$.ajax({
 			//这里的需要Struts.xml的<action/>的name属性一致。
 			url : "setin",

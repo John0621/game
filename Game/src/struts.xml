@@ -10,7 +10,7 @@
 		<action name="setin" class="tableAction" method="setin" />
 	</package>
 	<package name="person" extends="json-default">
-		<action name="setin" class="tableAction">
+		<action name="tableAction" class="tableAction" method="setin">
 			<result type="json" />
 		</action>
 	</package>
